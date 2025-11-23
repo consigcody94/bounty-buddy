@@ -1,0 +1,16 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+"""
+MQTT Scanner - IoTHackBot
+MQTT broker discovery and security testing tool
+"""
+import sys
+import os
+
+# Add tools directory to path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'tools'))
+
+from iothackbot.mqttscan import mqttscan
+
+if __name__ == "__main__":
+    sys.exit(mqttscan())

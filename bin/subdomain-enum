@@ -1,0 +1,16 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+"""
+Subdomain Enumeration Tool - Bounty Buddy
+Multi-source subdomain discovery for bug bounty hunting
+"""
+import sys
+import os
+
+# Add tools directory to path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'tools'))
+
+from iothackbot.subdomain_enum import subdomain_enum
+
+if __name__ == "__main__":
+    sys.exit(subdomain_enum())

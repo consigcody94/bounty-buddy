@@ -1,0 +1,3 @@
+"""
+IoTHackBot Test Suite
+"""
