@@ -119,7 +119,7 @@ class ConfigBuilder:
         # Extract common args
         input_paths = getattr(args, 'paths', getattr(args, 'path', None))
         if input_paths is None:
-            input_paths = getattr(args, 'target', getattr(args, 'input', getattr(args, 'hostname', getattr(args, 'url', ''))))
+            input_paths = getattr(args, 'target', getattr(args, 'input', getattr(args, 'hostname', getattr(args, 'url', getattr(args, 'domain', '')))))
             if input_paths and not isinstance(input_paths, list):
                 input_paths = [input_paths]
         elif not isinstance(input_paths, list):
