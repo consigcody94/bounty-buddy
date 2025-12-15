@@ -1,155 +1,171 @@
-# Bounty Buddy 🎯
+<div align="center">
 
-**Built upon [IoTHackBot](https://github.com/BrownFineSecurity/iothackbot)** - A comprehensive bug bounty and security testing toolkit combining IoT security tools with modern web application testing capabilities.
+<!-- Animated Header -->
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=18,20,22&height=200&section=header&text=🎯%20BOUNTY%20BUDDY&fontSize=70&fontColor=fff&animation=twinkling&fontAlignY=35&desc=All-In-One%20Bug%20Bounty%20%26%20Security%20Testing%20Toolkit&descAlignY=55&descSize=18"/>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](https://github.com/BrownFineSecurity/iothackbot/actions)
+<br/>
 
-## 🌟 Overview
+<!-- Badges Row 1 -->
+<p>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License"/></a>
+<a href="#"><img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/></a>
+<a href="#"><img src="https://img.shields.io/badge/Security-Testing-ff6b6b?style=for-the-badge" alt="Security"/></a>
+</p>
 
-Bounty Buddy is an all-in-one security testing toolkit designed for bug bounty hunters and penetration testers. Built upon the solid foundation of IoTHackBot, it combines specialized IoT security tools with comprehensive web application testing capabilities, automation frameworks, and professional reporting.
+<!-- Badges Row 2 -->
+<p>
+<img src="https://img.shields.io/badge/Subdomain_Enum-✓-00d4aa?style=flat-square" alt="Subdomain"/>
+<img src="https://img.shields.io/badge/API_Fuzzing-✓-3178c6?style=flat-square" alt="API"/>
+<img src="https://img.shields.io/badge/Nuclei_Scan-✓-F7931E?style=flat-square" alt="Nuclei"/>
+<img src="https://img.shields.io/badge/XSS_Hunter-✓-9b59b6?style=flat-square" alt="XSS"/>
+<img src="https://img.shields.io/badge/IoT_Security-✓-e74c3c?style=flat-square" alt="IoT"/>
+</p>
 
-### What's New in Bounty Buddy?
+<br/>
 
-✅ **Web Application Testing** - Subdomain enumeration, API fuzzing, vulnerability scanning
-✅ **Bug Bounty Automation** - Automated reconnaissance and scanning workflows
-✅ **Professional Reporting** - HTML, JSON, and Markdown report generation
-✅ **Async Operations** - High-performance concurrent scanning
-✅ **Logging Framework** - Comprehensive audit trails
-✅ **CI/CD Integration** - GitHub Actions, pre-commit hooks, automated testing
-✅ **IoT Security** - Original IoTHackBot tools for IoT/embedded systems
+<!-- Tagline Box -->
+<table>
+<tr>
+<td>
 
-## 🛠️ Tools Included
-
-### 🌐 Web Application & Bug Bounty Tools
-
-#### **subdomain-enum** - Multi-source subdomain enumeration
-- Integrates subfinder, amass, assetfinder
-- Certificate transparency log parsing
-- Passive and active reconnaissance
-- Deduplication and validation
-
-#### **apifuzz** - API endpoint fuzzing and discovery
-- FFuF integration for high-speed fuzzing
-- Common API pattern detection
-- Parameter discovery
-- Authentication testing
-
-#### **nucleiscan** - Template-based vulnerability scanning
-- Integration with ProjectDiscovery Nuclei
-- CVE detection
-- Exposure identification
-- Custom template support
-
-#### **webcrawl** - Intelligent web endpoint discovery
-- JavaScript file parsing
-- URL parameter extraction
-- Sitemap and robots.txt analysis
-- Historical endpoint discovery (Wayback Machine)
-
-#### **xsshunter** - XSS vulnerability detection
-- Context-aware payload generation
-- DOM-based XSS detection
-- Reflected and stored XSS testing
-- WAF bypass techniques
-
-### 📡 IoT & Network Security Tools (from IoTHackBot)
-
-#### **wsdiscovery** - WS-Discovery protocol scanner
-- ONVIF camera discovery
-- IoT device enumeration
-- Service endpoint identification
-
-#### **onvifscan** - ONVIF device security scanner
-- Authentication bypass testing
-- Credential brute-forcing
-- Configuration exposure detection
-
-#### **mqttscan** - MQTT broker security testing
-- Broker discovery and fingerprinting
-- Anonymous access detection
-- Authentication testing
-- Protocol compliance checking
-
-#### **iotnet** - IoT network traffic analyzer
-- Protocol detection and analysis
-- Vulnerability identification
-- PCAP file support
-
-#### **ffind** - Firmware analysis tool
-- Filesystem extraction (ext2/3/4, F2FS)
-- File type identification
-- Binary analysis
-
-### 🔧 Utilities & Framework
-
-#### **async-scanner** - High-performance network scanning
-- Asynchronous TCP/UDP port scanning
-- Concurrent host discovery
-- Rate-limited operations
-
-#### **report-generator** - Professional report creation
-- HTML reports with styling
-- JSON for automation
-- Markdown for documentation
-- Multi-scan aggregation
-
-#### **logger** - Comprehensive logging framework
-- Configurable log levels
-- File and console output
-- Rotating log files
-- Tool-specific loggers
-
-## 📦 Installation
-
-### Quick Install
-
-```bash
-# Clone the repository
-git clone https://github.com/BrownFineSecurity/iothackbot.git
-cd iothackbot
-
-# Install as package
-pip install -e .
-
-# Verify installation
-bountybuddy --version
-subdomain-enum --help
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║   🎯  BOUNTY BUDDY: Hunt bugs like a pro                                    ║
+║                                                                              ║
+║       🌐  Web App Testing - Subdomain, API fuzzing, XSS detection           ║
+║       📡  IoT Security - MQTT, ONVIF, firmware analysis                      ║
+║       🔒  Nuclei Integration - CVE detection, vulnerability scanning         ║
+║       📊  Professional Reports - HTML, JSON, Markdown output                 ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
-### Manual Setup
+</td>
+</tr>
+</table>
 
-```bash
-# Clone repository
-git clone https://github.com/BrownFineSecurity/iothackbot.git
-cd iothackbot
+<br/>
 
-# Install dependencies
-pip install -r requirements.txt
+<!-- Quick Links -->
+[**🚀 Quick Start**](#-quick-start) · [**🛠 Tools**](#-tools-included) · [**📚 Docs**](#-documentation) · [**⚠️ Legal**](#-legal-disclaimer)
 
-# Add to PATH
-export PATH="$PATH:$(pwd)/bin"
+<br/>
 
-# Make permanent
-echo 'export PATH="$PATH:'$(pwd)'/bin"' >> ~/.bashrc
-source ~/.bashrc
+</div>
+
+---
+
+<br/>
+
+## 🎯 The Problem vs Solution
+
+<table>
+<tr>
+<td width="50%">
+
+### ❌ The Problem
+```
+Manual reconnaissance:
+├── Run subfinder
+├── Run amass
+├── Deduplicate results
+├── Probe live hosts
+├── Run vulnerability scans
+├── Generate report
+└── Hours of context switching
 ```
 
-### Development Setup
+</td>
+<td width="50%">
 
+### ✅ The Solution
 ```bash
-# Install development dependencies
-pip install -r requirements-dev.txt
+$ bountybuddy target.com
 
-# Install pre-commit hooks
-pre-commit install
+✓ Subdomains: 847 found
+✓ Live hosts: 234 active
+✓ Vulnerabilities: 12 found
+  - 2 Critical (SQLi, RCE)
+  - 4 High (XSS, SSRF)
+  - 6 Medium
+✓ Report: bounty-report.html
 
-# Run tests
-pytest tests/ -v --cov=tools/iothackbot
+🎯 Happy hunting!
 ```
+
+</td>
+</tr>
+</table>
+
+<br/>
+
+---
+
+<br/>
+
+## 🛠 Tools Included
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    WEB APPLICATION TOOLS                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  🔍  SUBDOMAIN-ENUM                                             │
+│      Multi-source enumeration (subfinder, amass, assetfinder)  │
+│                                                                 │
+│  🔧  APIFUZZ                                                    │
+│      API endpoint discovery and fuzzing with FFuF               │
+│                                                                 │
+│  🎯  NUCLEISCAN                                                 │
+│      Template-based vulnerability detection                     │
+│                                                                 │
+│  🕷️  WEBCRAWL                                                   │
+│      JavaScript parsing, URL extraction, Wayback Machine        │
+│                                                                 │
+│  💉  XSSHUNTER                                                  │
+│      Context-aware XSS detection with WAF bypass               │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    IoT SECURITY TOOLS                           │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  📡  WSDISCOVERY                                                │
+│      ONVIF camera and IoT device enumeration                    │
+│                                                                 │
+│  📹  ONVIFSCAN                                                  │
+│      Authentication bypass and credential testing               │
+│                                                                 │
+│  📨  MQTTSCAN                                                   │
+│      MQTT broker security and anonymous access testing          │
+│                                                                 │
+│  🔬  FFIND                                                      │
+│      Firmware extraction and binary analysis                    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+<br/>
+
+---
+
+<br/>
 
 ## 🚀 Quick Start
+
+### Installation
+
+```bash
+# Clone and install
+git clone https://github.com/consigcody94/bounty-buddy.git
+cd bounty-buddy
+pip install -e .
+
+# Verify
+bountybuddy --version
+```
 
 ### Bug Bounty Workflow
 
@@ -163,199 +179,142 @@ httpx -l subdomains.txt -o live-hosts.txt
 # 3. Vulnerability Scanning
 nucleiscan -l live-hosts.txt -t cves/ -t vulnerabilities/
 
-# 4. API Discovery & Fuzzing
+# 4. API Fuzzing
 apifuzz https://api.target.com -w api-wordlist.txt
 
 # 5. XSS Testing
 xsshunter https://target.com/search?q=test
 
 # 6. Generate Report
-python -c "from iothackbot.core.report_generator import ReportGenerator; ..."
-```
-
-### IoT Security Testing
-
-```bash
-# Discover IoT Devices
-wsdiscovery 239.255.255.250
-
-# Test ONVIF Security
-onvifscan auth http://192.168.1.100 --all
-
-# MQTT Broker Testing
-mqttscan 192.168.1.100
-
-# Firmware Analysis
-sudo ffind firmware.bin -e
-```
-
-### Complete Automation Script
-
-```bash
-#!/bin/bash
-# Bug bounty automation with Bounty Buddy
-
-DOMAIN="target.com"
-
-echo "[+] Phase 1: Reconnaissance"
-subdomain-enum $DOMAIN -o subs.txt
-httpx -l subs.txt -o live.txt
-
-echo "[+] Phase 2: Scanning"
-nucleiscan -l live.txt -o vulns.json
-
-echo "[+] Phase 3: Fuzzing"
-cat live.txt | while read url; do
-    apifuzz $url -w common-apis.txt
-done
-
-echo "[+] Phase 4: Reporting"
 bountybuddy-report generate -i vulns.json -o report.html
-
-echo "[✓] Assessment Complete!"
 ```
+
+<br/>
+
+---
+
+<br/>
+
+## 📊 Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    BOUNTY BUDDY ARCHITECTURE                    │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  bountybuddy/                                                   │
+│  ├── bin/                    # CLI executables                  │
+│  │   ├── subdomain-enum                                        │
+│  │   ├── apifuzz                                               │
+│  │   ├── nucleiscan                                            │
+│  │   ├── xsshunter                                             │
+│  │   └── mqttscan                                              │
+│  │                                                              │
+│  ├── tools/iothackbot/       # Core package                    │
+│  │   ├── core/               # Scanning engines                │
+│  │   │   ├── subdomain_core.py                                 │
+│  │   │   ├── async_scanner.py                                  │
+│  │   │   └── report_generator.py                               │
+│  │   └── *.py                # CLI interfaces                  │
+│  │                                                              │
+│  ├── tests/                  # Test suite                      │
+│  ├── wordlists/              # Fuzzing dictionaries            │
+│  └── .github/workflows/      # CI/CD pipelines                 │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+<br/>
+
+---
+
+<br/>
 
 ## 📚 Documentation
 
-- **[QUICKSTART.md](QUICKSTART.md)** - Get started in 5 minutes
-- **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Comprehensive usage examples
-- **[docs/BUG_BOUNTY_GUIDE.md](docs/BUG_BOUNTY_GUIDE.md)** - Bug bounty hunting guide
-- **[TOOL_DEVELOPMENT_GUIDE.md](TOOL_DEVELOPMENT_GUIDE.md)** - Creating new tools
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
-- **[IMPROVEMENTS.md](IMPROVEMENTS.md)** - Recent enhancements
+<div align="center">
 
-## 🎯 Use Cases
+| Document | Description |
+|:---------|:------------|
+| **[QUICKSTART.md](QUICKSTART.md)** | Get started in 5 minutes |
+| **[BUG_BOUNTY_GUIDE.md](docs/BUG_BOUNTY_GUIDE.md)** | Complete hunting guide |
+| **[TOOL_DEVELOPMENT_GUIDE.md](TOOL_DEVELOPMENT_GUIDE.md)** | Create custom tools |
+| **[CONTRIBUTING.md](CONTRIBUTING.md)** | Contribution guidelines |
 
-### Bug Bounty Hunting
-- Subdomain discovery and enumeration
-- API endpoint fuzzing
-- Vulnerability detection with Nuclei
-- Automated reconnaissance
-- Professional report generation
+</div>
 
-### Penetration Testing
-- Comprehensive asset discovery
-- Network and service enumeration
-- Web application security testing
-- IoT device assessment
-- Firmware analysis
+<br/>
 
-### Red Team Operations
-- Attack surface mapping
-- Vulnerability chaining
-- Custom payload generation
-- Automated exploitation workflows
+---
 
-### Security Research
-- IoT protocol analysis
-- Network traffic inspection
-- Binary and firmware analysis
-- Vulnerability research
-
-## 🏆 Features
-
-### 🔄 Automation
-- **Multi-tool integration** - Combine tools for complete workflows
-- **Async operations** - High-speed concurrent scanning
-- **CI/CD ready** - GitHub Actions integration
-- **Scheduled scans** - Automated periodic assessments
-
-### 📊 Reporting
-- **HTML reports** - Professional, styled HTML output
-- **JSON exports** - Machine-readable for automation
-- **Markdown docs** - Easy documentation
-- **Evidence tracking** - Screenshots, logs, proof of concept
-
-### 🔐 Security
-- **Ethical guidelines** - Built-in authorization reminders
-- **Rate limiting** - Responsible scanning speeds
-- **Audit logging** - Complete activity trails
-- **Security scanning** - Bandit and Trivy in CI/CD
-
-### 🧪 Quality
-- **100% test coverage** - Comprehensive unit tests
-- **Type checking** - Static analysis with mypy
-- **Code formatting** - Black, isort, flake8
-- **Pre-commit hooks** - Automated quality checks
-
-## 🔧 Architecture
-
-```
-bountybuddy/
-├── bin/                      # Executable binaries
-│   ├── subdomain-enum
-│   ├── apifuzz
-│   ├── nucleiscan
-│   ├── xsshunter
-│   ├── mqttscan
-│   └── ...
-├── tools/iothackbot/         # Core Python package
-│   ├── core/                 # Core functionality
-│   │   ├── subdomain_core.py
-│   │   ├── apifuzz_core.py
-│   │   ├── nuclei_core.py
-│   │   ├── async_scanner.py
-│   │   ├── logger.py
-│   │   └── report_generator.py
-│   └── *.py                  # CLI interfaces
-├── tests/                    # Test suite
-├── docs/                     # Documentation
-├── wordlists/                # Fuzzing wordlists
-└── .github/workflows/        # CI/CD pipelines
-```
-
-## 🤝 Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Areas for Contribution
-- New security testing tools
-- Enhanced automation workflows
-- Additional report formats
-- Documentation improvements
-- Bug fixes and optimizations
-
-## 📜 License
-
-MIT License - See [LICENSE](LICENSE) file for details
+<br/>
 
 ## ⚠️ Legal Disclaimer
 
-**IMPORTANT**: This toolkit is for authorized security testing only.
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    IMPORTANT NOTICE                             │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  This toolkit is for AUTHORIZED security testing ONLY.         │
+│                                                                 │
+│  ✅  Test systems you own or have written permission           │
+│  ✅  Respect scope limitations and rules of engagement         │
+│  ✅  Follow responsible disclosure practices                    │
+│  ✅  Document all testing activities                            │
+│                                                                 │
+│  ❌  Never use for unauthorized access                          │
+│  ❌  Never use for malicious purposes                           │
+│                                                                 │
+│  Users are solely responsible for proper authorization.         │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-- ✅ Only test systems you own or have explicit written permission to test
-- ✅ Respect scope limitations and rules of engagement
-- ✅ Follow responsible disclosure practices
-- ✅ Document all testing activities
-- ❌ Never use for unauthorized access
-- ❌ Never use for malicious purposes
+<br/>
 
-Users are solely responsible for ensuring proper authorization. The authors and contributors are not liable for any misuse or damage.
+---
+
+<br/>
 
 ## 🙏 Acknowledgments
 
 **Built upon [IoTHackBot](https://github.com/BrownFineSecurity/iothackbot)** by BrownFine Security
 
-Special thanks to:
-- The original IoTHackBot contributors
-- ProjectDiscovery team (Nuclei, httpx, subfinder)
-- OWASP community
-- Bug bounty community
-- All open-source security tool developers
+Special thanks to ProjectDiscovery (Nuclei, httpx, subfinder), OWASP community, and all open-source security tool developers.
 
-## 📞 Support
-
-- 🐛 [Report Issues](https://github.com/BrownFineSecurity/iothackbot/issues)
-- 💬 [Discussions](https://github.com/BrownFineSecurity/iothackbot/discussions)
-- 📖 [Documentation](https://github.com/BrownFineSecurity/iothackbot/wiki)
-- 🐦 Follow us for updates
-
-## 🌟 Star History
-
-If you find Bounty Buddy useful, please consider giving it a star! ⭐
+<br/>
 
 ---
 
-**Happy Hunting! 🎯🔐**
+<br/>
 
-*Remember: With great power comes great responsibility. Always hack ethically.*
+## 📄 License
+
+<div align="center">
+
+**MIT License** © Bounty Buddy
+
+</div>
+
+<br/>
+
+---
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=18,20,22&height=100&section=footer"/>
+
+<br/>
+
+**🎯 Bounty Buddy** — *Hunt bugs like a pro*
+
+<br/>
+
+*"With great power comes great responsibility. Always hack ethically."*
+
+<br/>
+
+[⬆ Back to Top](#-bounty-buddy)
+
+</div>
