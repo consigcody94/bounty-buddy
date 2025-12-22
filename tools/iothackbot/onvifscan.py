@@ -1,6 +1,17 @@
 #!/usr/bin/env python3
+"""
+ONVIF Security Scanner CLI tool for testing IP cameras and video devices.
+
+SPDX-License-Identifier: MIT
+"""
+
+from __future__ import annotations
+
 import argparse
+import textwrap
+
 from colorama import init, Fore, Style
+
 from .core.onvifscan_core import OnvifScanTool
 from .core.interfaces import ConfigBuilder, OutputFormatter, ToolConfig, ToolResult
 
@@ -261,22 +272,99 @@ def run_brute(config: 'ToolConfig') -> 'ToolResult':
 
 def onvifscan():
     """Main CLI entry point with subcommands."""
-    parser = argparse.ArgumentParser(description="ONVIF Security Scanner")
+    parser = argparse.ArgumentParser(
+        description="ONVIF Security Scanner for IP cameras and video surveillance devices.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=textwrap.dedent("""
+            Examples:
+              %(prog)s auth 192.168.1.100
+                  Test unauthenticated access to ONVIF endpoints
+
+              %(prog)s auth 192.168.1.100 -a
+                  Test all endpoints including potentially destructive ones
+
+              %(prog)s auth 192.168.1.100 -v
+                  Show verbose output with full response content
+
+              %(prog)s brute 192.168.1.100
+                  Attempt credential brute-forcing with default wordlists
+
+              %(prog)s brute 192.168.1.100 --usernames users.txt --passwords pass.txt
+                  Use custom wordlists for brute-forcing
+
+            ONVIF Protocol:
+              ONVIF (Open Network Video Interface Forum) is a standard for IP-based
+              security products. This tool tests ONVIF devices for common security
+              vulnerabilities including unauthenticated access and weak credentials.
+
+            Security Tests:
+              - Unauthenticated endpoint access
+              - Default credential detection
+              - Credential brute-forcing
+              - Information disclosure
+
+            For authorized testing only. Ensure you have permission before scanning.
+        """)
+    )
     subparsers = parser.add_subparsers(dest='command', required=True, help="Available commands")
 
     # Auth subcommand (existing functionality)
-    auth_parser = subparsers.add_parser('auth', help="Run authentication checks")
-    auth_parser.add_argument("url", help="Base URL of the ONVIF device")
-    auth_parser.add_argument("-v", "--verbose", action="store_true", help="Show full response content")
-    auth_parser.add_argument("-a", "--all", action="store_true", help="Test all endpoints including destructive")
-    auth_parser.add_argument("--format", choices=['text', 'json', 'quiet'], default='text', help="Output format")
+    auth_parser = subparsers.add_parser(
+        'auth',
+        help="Test for unauthenticated access vulnerabilities",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="Example: %(prog)s 192.168.1.100 -v"
+    )
+    auth_parser.add_argument(
+        "url",
+        help="Target ONVIF device URL (e.g., 192.168.1.100 or http://192.168.1.100:8080)"
+    )
+    auth_parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Show full response content in output"
+    )
+    auth_parser.add_argument(
+        "-a", "--all",
+        action="store_true",
+        help="Test all endpoints including potentially destructive operations"
+    )
+    auth_parser.add_argument(
+        "--format",
+        choices=['text', 'json', 'quiet'],
+        default='text',
+        metavar="FORMAT",
+        help="Output format: text (default), json, or quiet"
+    )
 
     # Brute subcommand
-    brute_parser = subparsers.add_parser('brute', help="Run credential brute-forcing")
-    brute_parser.add_argument("url", help="Base URL of the ONVIF device")
-    brute_parser.add_argument("--usernames", help="Path to usernames wordlist (default: built-in onvif-usernames.txt)")
-    brute_parser.add_argument("--passwords", help="Path to passwords wordlist (default: built-in onvif-passwords.txt)")
-    brute_parser.add_argument("--format", choices=['text', 'json', 'quiet'], default='text', help="Output format")
+    brute_parser = subparsers.add_parser(
+        'brute',
+        help="Attempt credential brute-forcing",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="Example: %(prog)s 192.168.1.100 --usernames users.txt"
+    )
+    brute_parser.add_argument(
+        "url",
+        help="Target ONVIF device URL"
+    )
+    brute_parser.add_argument(
+        "--usernames",
+        metavar="FILE",
+        help="Path to usernames wordlist (default: built-in onvif-usernames.txt)"
+    )
+    brute_parser.add_argument(
+        "--passwords",
+        metavar="FILE",
+        help="Path to passwords wordlist (default: built-in onvif-passwords.txt)"
+    )
+    brute_parser.add_argument(
+        "--format",
+        choices=['text', 'json', 'quiet'],
+        default='text',
+        metavar="FORMAT",
+        help="Output format: text (default), json, or quiet"
+    )
 
     args = parser.parse_args()
     init()  # Initialize colorama

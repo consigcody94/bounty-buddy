@@ -1,12 +1,19 @@
 """
-Async network scanner utilities for IoTHackBot
+Async network scanner utilities for Bounty Buddy
 Provides high-performance asynchronous scanning capabilities
+
+SPDX-License-Identifier: MIT
 """
 
+from __future__ import annotations
+
 import asyncio
+import logging
 import socket
-from typing import List, Tuple, Optional, Callable, Any
+from typing import List, Tuple, Optional, Callable, Any, AsyncIterator
 from dataclasses import dataclass
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -143,7 +150,8 @@ class AsyncPortScanner:
         self,
         hosts: List[str],
         ports: List[int],
-        callback: Optional[Callable[[ScanResult], None]] = None
+        callback: Optional[Callable[[ScanResult], None]] = None,
+        chunk_size: int = 1000
     ) -> List[ScanResult]:
         """
         Scan multiple ports on multiple hosts asynchronously.
@@ -152,22 +160,80 @@ class AsyncPortScanner:
             hosts: List of target hosts
             ports: List of ports to scan
             callback: Optional callback function called for each result
+            chunk_size: Process tasks in chunks to manage memory for large scans
 
         Returns:
             List of ScanResults
         """
-        tasks = []
-        for host in hosts:
-            for port in ports:
-                tasks.append(self.scan_port(host, port))
+        # For small scans, use simple gather
+        total_tasks = len(hosts) * len(ports)
+        if total_tasks <= chunk_size:
+            tasks = []
+            for host in hosts:
+                for port in ports:
+                    tasks.append(self.scan_port(host, port))
 
-        results = await asyncio.gather(*tasks)
+            results = await asyncio.gather(*tasks)
 
-        if callback:
-            for result in results:
-                callback(result)
+            if callback:
+                for result in results:
+                    callback(result)
 
-        return results
+            return list(results)
+
+        # For large scans, use chunked processing to manage memory
+        logger.debug(f"Large scan detected ({total_tasks} tasks), using chunked processing")
+        all_results = []
+
+        # Generate all (host, port) pairs
+        scan_pairs = [(host, port) for host in hosts for port in ports]
+
+        # Process in chunks
+        for i in range(0, len(scan_pairs), chunk_size):
+            chunk = scan_pairs[i:i + chunk_size]
+            tasks = [self.scan_port(host, port) for host, port in chunk]
+
+            chunk_results = await asyncio.gather(*tasks)
+
+            if callback:
+                for result in chunk_results:
+                    callback(result)
+
+            all_results.extend(chunk_results)
+
+            # Allow other tasks to run between chunks
+            await asyncio.sleep(0)
+
+        return all_results
+
+    async def scan_network_streaming(
+        self,
+        hosts: List[str],
+        ports: List[int],
+        chunk_size: int = 100
+    ) -> AsyncIterator[ScanResult]:
+        """
+        Scan network with streaming results for memory-efficient large scans.
+
+        Args:
+            hosts: List of target hosts
+            ports: List of ports to scan
+            chunk_size: Number of concurrent scans per chunk
+
+        Yields:
+            ScanResult objects as they complete
+        """
+        scan_pairs = [(host, port) for host in hosts for port in ports]
+
+        for i in range(0, len(scan_pairs), chunk_size):
+            chunk = scan_pairs[i:i + chunk_size]
+            tasks = [self.scan_port(host, port) for host, port in chunk]
+
+            for result in await asyncio.gather(*tasks):
+                yield result
+
+            # Allow other tasks to run between chunks
+            await asyncio.sleep(0)
 
 
 class AsyncUDPScanner:

@@ -1,13 +1,18 @@
 """
 Common interfaces and data structures for iothackbot tools.
 Provides standardized interfaces for tool chaining and automation.
+
+SPDX-License-Identifier: MIT
 """
 
-from abc import ABC, abstractmethod
-from dataclasses import dataclass, field, asdict
-from typing import Any, Dict, List, Optional
+from __future__ import annotations
+
+import argparse
 import json
 import time
+from abc import ABC, abstractmethod
+from dataclasses import dataclass, field, asdict
+from typing import Any, Dict, List, Optional, Union
 
 
 @dataclass
@@ -112,7 +117,7 @@ class ConfigBuilder:
         return ToolConfig(**data)
 
     @staticmethod
-    def from_args(args, tool_name: str) -> ToolConfig:
+    def from_args(args: argparse.Namespace, tool_name: str) -> ToolConfig:
         """Create ToolConfig from argparse args. Override in tool-specific builders."""
         custom_args = {}
 

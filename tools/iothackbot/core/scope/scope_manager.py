@@ -6,16 +6,24 @@ Handles:
 - Scope validation before tool execution
 - Multi-platform support (HackerOne, Bugcrowd, Intigriti, YesWeHack, Custom)
 - Persistent scope storage
+
+SPDX-License-Identifier: MIT
 """
 
+from __future__ import annotations
+
 import json
+import logging
 import os
 import re
 from dataclasses import dataclass, field, asdict
 from datetime import datetime
+from ipaddress import ip_address, ip_network, AddressValueError, NetmaskValueError
 from pathlib import Path
-from typing import List, Dict, Optional, Set
+from typing import List, Dict, Optional, Set, Any, Tuple, Callable
 from enum import Enum
+
+logger = logging.getLogger(__name__)
 
 
 class BugBountyPlatform(Enum):
@@ -76,20 +84,43 @@ class ScopeAsset:
             return target == self.value
 
     @staticmethod
-    def _ip_in_range(ip: str, ip_range: str) -> bool:
-        """Check if IP is in range (basic implementation)"""
-        # TODO: Implement proper CIDR matching with ipaddress module
+    def _ip_in_range(ip_str: str, ip_range: str) -> bool:
+        """
+        Check if IP is in range using proper CIDR matching.
+
+        Args:
+            ip_str: The IP address to check
+            ip_range: CIDR notation (e.g., 192.168.1.0/24) or dash notation (e.g., 192.168.1.1-192.168.1.255)
+
+        Returns:
+            True if IP is in range, False otherwise
+        """
+        try:
+            target_ip = ip_address(ip_str)
+        except (AddressValueError, ValueError) as e:
+            logger.debug(f"Invalid IP address '{ip_str}': {e}")
+            return False
+
         if "/" in ip_range:
             # CIDR notation
             try:
-                from ipaddress import ip_address, ip_network
-                return ip_address(ip) in ip_network(ip_range, strict=False)
-            except:
+                network = ip_network(ip_range, strict=False)
+                return target_ip in network
+            except (AddressValueError, NetmaskValueError, ValueError) as e:
+                logger.debug(f"Invalid CIDR range '{ip_range}': {e}")
                 return False
         elif "-" in ip_range:
             # Range notation (e.g., 192.168.1.1-192.168.1.255)
-            # Basic implementation
-            return ip_range.split("-")[0] <= ip <= ip_range.split("-")[1]
+            try:
+                parts = ip_range.split("-")
+                if len(parts) != 2:
+                    return False
+                start_ip = ip_address(parts[0].strip())
+                end_ip = ip_address(parts[1].strip())
+                return start_ip <= target_ip <= end_ip
+            except (AddressValueError, ValueError) as e:
+                logger.debug(f"Invalid IP range '{ip_range}': {e}")
+                return False
         return False
 
 
@@ -102,7 +133,7 @@ class ProgramScope:
     out_of_scope: List[ScopeAsset] = field(default_factory=list)
 
     # Program rules and restrictions
-    rules: Dict[str, any] = field(default_factory=dict)
+    rules: Dict[str, Any] = field(default_factory=dict)
 
     # Testing restrictions
     allowed_attack_types: Set[str] = field(default_factory=set)
@@ -113,7 +144,7 @@ class ProgramScope:
     updated_at: str = field(default_factory=lambda: datetime.utcnow().isoformat())
     notes: str = ""
 
-    def is_in_scope(self, target: str) -> tuple[bool, Optional[str]]:
+    def is_in_scope(self, target: str) -> Tuple[bool, Optional[str]]:
         """
         Check if a target is in scope
 
@@ -133,7 +164,7 @@ class ProgramScope:
         # Not found in either list
         return False, f"Target '{target}' not found in scope definition"
 
-    def can_perform_attack(self, attack_type: str) -> tuple[bool, Optional[str]]:
+    def can_perform_attack(self, attack_type: str) -> Tuple[bool, Optional[str]]:
         """Check if an attack type is allowed"""
         if attack_type in self.forbidden_attack_types:
             return False, f"Attack type '{attack_type}' is explicitly forbidden"
@@ -152,6 +183,51 @@ class ScopeManager:
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self.current_scope: Optional[ProgramScope] = None
 
+    @staticmethod
+    def _get_validated_input(prompt: str, validator: Optional[Callable[[str], bool]] = None,
+                              error_msg: str = "Invalid input, please try again.") -> str:
+        """
+        Get validated input from user with retry logic.
+
+        Args:
+            prompt: The prompt to display
+            validator: Optional validation function returning True if valid
+            error_msg: Message to display on validation failure
+
+        Returns:
+            Validated user input
+        """
+        while True:
+            user_input = input(prompt).strip()
+            if validator is None or validator(user_input):
+                return user_input
+            print(f"  {error_msg}")
+
+    @staticmethod
+    def _get_validated_int(prompt: str, min_val: int, max_val: int,
+                           error_msg: str = "Invalid number, please try again.") -> int:
+        """
+        Get validated integer input from user with retry logic.
+
+        Args:
+            prompt: The prompt to display
+            min_val: Minimum valid value (inclusive)
+            max_val: Maximum valid value (inclusive)
+            error_msg: Message to display on validation failure
+
+        Returns:
+            Validated integer
+        """
+        while True:
+            try:
+                user_input = input(prompt).strip()
+                value = int(user_input)
+                if min_val <= value <= max_val:
+                    return value
+                print(f"  {error_msg} (must be between {min_val} and {max_val})")
+            except ValueError:
+                print(f"  {error_msg} (must be a number)")
+
     def interactive_scope_setup(self) -> ProgramScope:
         """
         Interactive CLI to set up a new bug bounty program scope
@@ -160,19 +236,29 @@ class ScopeManager:
             Configured ProgramScope object
         """
         print("\n" + "="*60)
-        print("🎯 Bug Bounty Program Scope Configuration")
+        print("Bug Bounty Program Scope Configuration")
         print("="*60 + "\n")
 
-        # Program name
-        program_name = input("Program name (e.g., 'Acme Corp Bug Bounty'): ").strip()
+        # Program name with validation
+        program_name = self._get_validated_input(
+            "Program name (e.g., 'Acme Corp Bug Bounty'): ",
+            validator=lambda x: len(x) >= 2,
+            error_msg="Program name must be at least 2 characters."
+        )
 
-        # Platform
+        # Platform with validation
         print("\nSelect platform:")
-        for i, platform in enumerate(BugBountyPlatform, 1):
+        platforms = list(BugBountyPlatform)
+        for i, platform in enumerate(platforms, 1):
             print(f"  {i}. {platform.value}")
 
-        platform_choice = int(input("Enter number (1-6): ").strip())
-        platform = list(BugBountyPlatform)[platform_choice - 1]
+        platform_choice = self._get_validated_int(
+            f"Enter number (1-{len(platforms)}): ",
+            min_val=1,
+            max_val=len(platforms),
+            error_msg="Invalid platform number."
+        )
+        platform = platforms[platform_choice - 1]
 
         # In-scope assets
         print("\n📌 IN-SCOPE ASSETS")
@@ -378,7 +464,7 @@ class ScopeManager:
         safe_name = re.sub(r'[^\w\s-]', '', program_name).strip().replace(' ', '_')
         return self.config_dir / f"{safe_name}.json"
 
-    def validate_target(self, target: str, attack_type: Optional[str] = None) -> tuple[bool, str]:
+    def validate_target(self, target: str, attack_type: Optional[str] = None) -> Tuple[bool, str]:
         """
         Validate a target against current scope
 
