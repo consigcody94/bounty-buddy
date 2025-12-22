@@ -7,16 +7,21 @@ Provides common functionality for all bug bounty tools:
 - Standardized output format
 - Logging and audit trails
 - Result caching
+
+SPDX-License-Identifier: MIT
 """
 
+from __future__ import annotations
+
 import json
+import logging
 import subprocess
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional, Any, Tuple
 
 from .scope import ScopeManager
 from .logger import setup_tool_logger
@@ -104,7 +109,7 @@ class ToolWrapper(ABC):
         """
         pass
 
-    def execute(self, target: str, **kwargs) -> tuple[bool, List[VulnerabilityFinding], str]:
+    def execute(self, target: str, **kwargs) -> Tuple[bool, List[VulnerabilityFinding], str]:
         """
         Execute tool with scope validation
 
@@ -141,7 +146,7 @@ class ToolWrapper(ABC):
             self.logger.error(f"Scan failed: {str(e)}")
             return False, [], f"Error: {str(e)}"
 
-    def validate_target(self, target: str) -> tuple[bool, str]:
+    def validate_target(self, target: str) -> Tuple[bool, str]:
         """Validate target against scope"""
         if not self.scope_manager.current_scope:
             self.logger.warning("No scope loaded - skipping validation")
@@ -225,28 +230,39 @@ class ToolWrapper(ABC):
         return mapping.get(priority, 0.0)
 
     def _get_cwe_mapping(self, vuln_type: str) -> Optional[str]:
-        """Get CWE ID for vulnerability type"""
-        # Load CWE mapping
+        """
+        Get CWE ID for vulnerability type.
+
+        Uses centralized CWE mappings from constants module, with fallback
+        to JSON file for custom mappings.
+
+        Args:
+            vuln_type: The vulnerability type (e.g., 'xss', 'sqli')
+
+        Returns:
+            CWE ID string (e.g., 'CWE-79') or None if not found
+        """
+        from .constants import CWE_MAPPINGS
+
+        # Normalize vulnerability type
+        normalized_type = vuln_type.lower().replace('-', '_').replace(' ', '_')
+
+        # Check centralized mappings first
+        if normalized_type in CWE_MAPPINGS:
+            return CWE_MAPPINGS[normalized_type]
+
+        # Fallback to JSON file for custom mappings
         cwe_path = Path(__file__).parent.parent / "taxonomies" / "bugcrowd-cwe-mapping.json"
+        if cwe_path.exists():
+            try:
+                with open(cwe_path, 'r') as f:
+                    custom_mappings = json.load(f)
+                if normalized_type in custom_mappings:
+                    return custom_mappings[normalized_type]
+            except (json.JSONDecodeError, OSError) as e:
+                self.logger.debug(f"Failed to load custom CWE mappings: {e}")
 
-        if not cwe_path.exists():
-            return None
-
-        # TODO: Implement CWE lookup
-        # For now, return common CWE IDs based on type
-        cwe_mappings = {
-            'xss': 'CWE-79',
-            'sqli': 'CWE-89',
-            'csrf': 'CWE-352',
-            'ssrf': 'CWE-918',
-            'idor': 'CWE-639',
-            'lfi': 'CWE-22',
-            'rfi': 'CWE-98',
-            'xxe': 'CWE-611',
-            'ssti': 'CWE-94',
-        }
-
-        return cwe_mappings.get(vuln_type.lower())
+        return None
 
 
 class ExternalToolWrapper(ToolWrapper):

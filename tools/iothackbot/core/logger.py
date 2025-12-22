@@ -1,7 +1,11 @@
 """
-Logging framework for IoTHackBot tools
-Provides centralized logging with configurable levels and formatting
+Logging framework for Bounty Buddy tools.
+Provides centralized logging with configurable levels and formatting.
+
+SPDX-License-Identifier: MIT
 """
+
+from __future__ import annotations
 
 import logging
 import sys

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
-IoTHackBot - IoT Security Testing Toolkit
+Bounty Buddy - Bug Bounty Security Testing Toolkit
 Setup configuration for package installation
+
+SPDX-License-Identifier: MIT
 """
 
 from setuptools import setup, find_packages
@@ -17,13 +19,13 @@ with open('requirements.txt') as f:
     requirements = [line.strip() for line in f if line.strip() and not line.startswith('#')]
 
 setup(
-    name="iothackbot",
+    name="bounty-buddy",
     version="1.0.0",
-    author="BrownFine Security",
-    description="Open-source IoT security testing toolkit with integrated Claude Code skills",
+    author="Bounty Buddy Contributors",
+    description="Comprehensive bug bounty security testing toolkit with IoT capabilities",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/BrownFineSecurity/iothackbot",
+    url="https://github.com/bounty-buddy/bounty-buddy",
     packages=find_packages(where="tools"),
     package_dir={"": "tools"},
     classifiers=[
@@ -48,10 +50,24 @@ setup(
         "dev": [
             "pytest>=7.4.0",
             "pytest-cov>=4.1.0",
-            "black>=23.7.0",
+            "pytest-asyncio>=0.21.0",
+            "pytest-mock>=3.11.0",
+            "black>=24.0.0",
             "flake8>=6.1.0",
             "mypy>=1.5.0",
             "isort>=5.12.0",
+            "bandit>=1.7.0",
+            "pylint>=3.0.0",
+        ],
+        "network": [
+            "pyshark>=0.6.0",
+        ],
+        "filetype": [
+            "python-magic>=0.4.27",
+        ],
+        "all": [
+            "pyshark>=0.6.0",
+            "python-magic>=0.4.27",
         ],
     },
     entry_points={
@@ -69,9 +85,10 @@ setup(
             "wordlists/*.txt",
         ],
     },
-    keywords="iot security penetration-testing onvif network-scanning vulnerability-assessment",
+    keywords="bug-bounty security penetration-testing onvif network-scanning vulnerability-assessment iot subdomain-enumeration",
     project_urls={
-        "Bug Reports": "https://github.com/BrownFineSecurity/iothackbot/issues",
-        "Source": "https://github.com/BrownFineSecurity/iothackbot",
+        "Bug Reports": "https://github.com/bounty-buddy/bounty-buddy/issues",
+        "Source": "https://github.com/bounty-buddy/bounty-buddy",
+        "Documentation": "https://github.com/bounty-buddy/bounty-buddy/blob/main/README.md",
     },
 )

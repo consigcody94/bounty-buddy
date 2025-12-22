@@ -1,5 +1,16 @@
+"""
+WS-Discovery CLI tool for discovering ONVIF-enabled devices.
+
+SPDX-License-Identifier: MIT
+"""
+
+from __future__ import annotations
+
 import argparse
+import textwrap
+
 from colorama import init, Fore, Style
+
 from .core.wsdiscovery_core import WSDiscoveryTool
 from .core.interfaces import ConfigBuilder, OutputFormatter
 
@@ -72,11 +83,52 @@ class WSDiscoveryOutputFormatter(OutputFormatter):
 
 def wsdiscovery():
     """Main CLI entry point for wsdiscovery."""
-    parser = argparse.ArgumentParser(description="WS-Discovery Fuzzer for ONVIF-like devices")
-    parser.add_argument("hostname", help="Hostname or IP address to target")
-    parser.add_argument("-v", "--verbose", action="store_true", help="Show full XML responses")
-    parser.add_argument("--format", choices=['text', 'json', 'quiet'], default='text',
-                       help="Output format (default: text)")
+    parser = argparse.ArgumentParser(
+        description="WS-Discovery tool for discovering ONVIF-enabled IP cameras and IoT devices.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=textwrap.dedent("""
+            Examples:
+              %(prog)s 192.168.1.100
+                  Discover WS-Discovery devices at the specified IP
+
+              %(prog)s 192.168.1.0/24
+                  Scan an entire subnet for WS-Discovery devices
+
+              %(prog)s 192.168.1.100 --format json
+                  Output results in JSON format for scripting
+
+              %(prog)s 192.168.1.100 -v
+                  Show verbose output including raw XML responses
+
+            WS-Discovery Protocol:
+              This tool sends WS-Discovery Probe messages to discover ONVIF-compatible
+              devices on the network. It can identify IP cameras, NVRs, DVRs, and other
+              devices implementing the WS-Discovery specification.
+
+            Output Formats:
+              text   - Human-readable colored output (default)
+              json   - Machine-readable JSON for integration
+              quiet  - Minimal output, errors only
+
+            For more information: https://github.com/bounty-buddy/bounty-buddy
+        """)
+    )
+    parser.add_argument(
+        "hostname",
+        help="Target IP address, hostname, or CIDR range (e.g., 192.168.1.100 or 192.168.1.0/24)"
+    )
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Show verbose output including full XML responses"
+    )
+    parser.add_argument(
+        "--format",
+        choices=['text', 'json', 'quiet'],
+        default='text',
+        metavar="FORMAT",
+        help="Output format: text (default), json, or quiet"
+    )
 
     args = parser.parse_args()
     init()  # Initialize colorama

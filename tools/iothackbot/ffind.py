@@ -1,6 +1,17 @@
 #!/usr/bin/env python3
+"""
+File finder CLI tool with type analysis and filesystem extraction capabilities.
+
+SPDX-License-Identifier: MIT
+"""
+
+from __future__ import annotations
+
 import argparse
+import textwrap
+
 from colorama import init, Fore, Style
+
 from .core.ffind_core import FfindTool, ARTIFACT_FILES
 from .core.interfaces import ConfigBuilder, OutputFormatter
 
@@ -47,14 +58,75 @@ class FfindOutputFormatter(OutputFormatter):
 
 def ffind():
     """Main CLI entry point for ffind."""
-    parser = argparse.ArgumentParser(description="File finder with type analysis and optional extraction.")
-    parser.add_argument("paths", nargs='+', help="File or directory paths to process.")
-    parser.add_argument("-e", "--extract", action="store_true", help="Perform extractions on supported file types.")
-    parser.add_argument("-d", "--directory", help="Custom extraction directory (default: timestamped in /tmp).", default=None)
-    parser.add_argument("-a", "--all", action="store_true", help="Print summary for all file types (default: only artifact types).")
-    parser.add_argument("-v", "--verbose", action="store_true", help="Print detailed file types for each file.")
-    parser.add_argument("--format", choices=['text', 'json', 'quiet'], default='text',
-                       help="Output format (default: text)")
+    parser = argparse.ArgumentParser(
+        description="File finder with type analysis and filesystem extraction for firmware analysis.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=textwrap.dedent("""
+            Examples:
+              %(prog)s firmware.bin
+                  Analyze file types in a firmware binary
+
+              %(prog)s /path/to/firmware/
+                  Recursively analyze all files in a directory
+
+              %(prog)s firmware.bin -e
+                  Extract supported filesystems (ext4, F2FS, JAR archives)
+
+              %(prog)s firmware.bin -e -d ./extracted/
+                  Extract to a custom directory
+
+              %(prog)s firmware.bin --format json
+                  Output results in JSON format
+
+            Supported Extractions:
+              - ext4/ext3/ext2 filesystem images
+              - F2FS filesystem images
+              - JAR/ZIP archives
+              - Additional formats via plugins
+
+            Security Artifacts:
+              The tool automatically identifies security-relevant files including:
+              - Private keys (.pem, .key)
+              - Certificates (.crt, .cer)
+              - Configuration files (.env, credentials)
+              - Password files (.htpasswd, shadow)
+
+            For more information: https://github.com/bounty-buddy/bounty-buddy
+        """)
+    )
+    parser.add_argument(
+        "paths",
+        nargs='+',
+        help="File or directory paths to analyze"
+    )
+    parser.add_argument(
+        "-e", "--extract",
+        action="store_true",
+        help="Extract supported filesystems and archives"
+    )
+    parser.add_argument(
+        "-d", "--directory",
+        metavar="DIR",
+        help="Custom extraction directory (default: timestamped in /tmp)",
+        default=None
+    )
+    parser.add_argument(
+        "-a", "--all",
+        action="store_true",
+        help="Show all file types (default: only security artifacts)"
+    )
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Show detailed file type information for each file"
+    )
+    parser.add_argument(
+        "--format",
+        choices=['text', 'json', 'quiet'],
+        default='text',
+        metavar="FORMAT",
+        help="Output format: text (default), json, or quiet"
+    )
 
     args = parser.parse_args()
     init()  # Initialize colorama

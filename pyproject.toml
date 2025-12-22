@@ -3,16 +3,16 @@ requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "iothackbot"
+name = "bounty-buddy"
 version = "1.0.0"
-description = "Open-source IoT security testing toolkit"
+description = "Comprehensive bug bounty security testing toolkit with IoT capabilities"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "BrownFine Security"}
+    {name = "Bounty Buddy Contributors"}
 ]
-keywords = ["iot", "security", "penetration-testing", "onvif", "network-scanning"]
+keywords = ["bug-bounty", "security", "penetration-testing", "onvif", "network-scanning", "iot", "vulnerability-assessment"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Information Technology",

@@ -1,19 +1,28 @@
 """
 Core ffind functionality - file type analysis and extraction.
 Separated from CLI logic for automation and chaining.
+
+SPDX-License-Identifier: MIT
 """
 
+from __future__ import annotations
+
+import datetime
+import logging
 import os
 import zipfile
-import datetime
 from typing import List, Tuple, Dict, Any
+
 from .interfaces import ToolInterface, ToolConfig, ToolResult
+
+logger = logging.getLogger(__name__)
 
 try:
     import magic
     HAS_MAGIC = True
 except ImportError:
     HAS_MAGIC = False
+    logger.debug("python-magic not available - file type detection will be limited")
 
 
 def enumerate_files(input_path: str) -> List[Tuple[str, str]]:
@@ -98,7 +107,8 @@ def extract_jar(file_path: str, base_extract_dir: str) -> bool:
             zip_ref.extractall(sub_extract_dir)
 
         return True
-    except Exception:
+    except (zipfile.BadZipFile, OSError, PermissionError) as e:
+        logger.debug(f"Failed to extract JAR file '{file_path}': {e}")
         return False
 
 
@@ -179,11 +189,13 @@ def extract_ext4(file_path: str, base_extract_dir: str) -> bool:
                     # Clean up loop device
                     subprocess.run(['sudo', 'losetup', '-d', loop_device], check=False)
 
-            except subprocess.CalledProcessError:
+            except subprocess.CalledProcessError as e:
                 # If mounting fails, try alternative approach with debugfs
+                logger.debug(f"Mount failed for '{file_path}', falling back to debugfs: {e}")
                 return extract_ext4_debugfs(file_path, sub_extract_dir)
 
-    except Exception:
+    except (OSError, PermissionError, subprocess.SubprocessError) as e:
+        logger.debug(f"Failed to extract ext4 filesystem '{file_path}': {e}")
         return False
 
 
@@ -236,7 +248,8 @@ def extract_ext4_debugfs(file_path: str, extract_dir: str) -> bool:
 
         return True
 
-    except Exception:
+    except (OSError, PermissionError, subprocess.SubprocessError) as e:
+        logger.debug(f"Failed to extract ext4 via debugfs '{file_path}': {e}")
         return False
 
 
@@ -317,11 +330,13 @@ def extract_f2fs(file_path: str, base_extract_dir: str) -> bool:
                     # Clean up loop device
                     subprocess.run(['sudo', 'losetup', '-d', loop_device], check=False)
 
-            except subprocess.CalledProcessError:
+            except subprocess.CalledProcessError as e:
                 # If mounting fails, try alternative approach with dump.f2fs
+                logger.debug(f"Mount failed for F2FS '{file_path}', falling back to dump: {e}")
                 return extract_f2fs_dump(file_path, sub_extract_dir)
 
-    except Exception:
+    except (OSError, PermissionError, subprocess.SubprocessError) as e:
+        logger.debug(f"Failed to extract F2FS filesystem '{file_path}': {e}")
         return False
 
 
@@ -373,7 +388,8 @@ def extract_f2fs_dump(file_path: str, extract_dir: str) -> bool:
 
         return True
 
-    except Exception:
+    except (OSError, PermissionError, subprocess.SubprocessError) as e:
+        logger.debug(f"Failed to extract F2FS via dump '{file_path}': {e}")
         return False
 
 
@@ -426,7 +442,8 @@ def analyze_files(file_list: List[Tuple[str, str]], extract_dir: str = None) -> 
                 if extracted:
                     extracted_files.append(rel_path)
 
-        except Exception:
+        except (OSError, PermissionError, ValueError) as e:
+            logger.debug(f"Failed to analyze file '{rel_path}': {e}")
             detection_failures.append(rel_path)
 
     return {
