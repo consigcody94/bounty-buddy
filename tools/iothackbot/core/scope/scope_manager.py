@@ -60,8 +60,14 @@ class ScopeAsset:
     def matches(self, target: str) -> bool:
         """Check if a target matches this scope asset"""
         if self.asset_type == AssetType.DOMAIN:
+            # Extract hostname from URL if needed
+            hostname = target
+            if "://" in target:
+                from urllib.parse import urlparse
+                parsed = urlparse(target)
+                hostname = parsed.hostname or target
             # Exact domain match or subdomain
-            return target == self.value or target.endswith(f".{self.value}")
+            return hostname == self.value or hostname.endswith(f".{self.value}")
 
         elif self.asset_type == AssetType.SUBDOMAIN:
             # Wildcard subdomain matching
