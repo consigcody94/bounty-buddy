@@ -3,6 +3,10 @@ colorama>=0.4.6
 pyserial>=3.5
 pexpect>=4.8.0
 requests>=2.31.0
+typer>=0.9.0
+rich>=13.0.0
+python-dotenv>=1.0.0
+shodan>=1.30.0
 
 # Network scanning and protocol support
 scapy>=2.5.0

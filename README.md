@@ -15,10 +15,9 @@
 <!-- Badges Row 2 -->
 <p>
 <img src="https://img.shields.io/badge/Subdomain_Enum-✓-00d4aa?style=flat-square" alt="Subdomain"/>
-<img src="https://img.shields.io/badge/API_Fuzzing-✓-3178c6?style=flat-square" alt="API"/>
+<img src="https://img.shields.io/badge/Shodan_Intel-✓-EE4D23?style=flat-square" alt="Shodan"/>
 <img src="https://img.shields.io/badge/Nuclei_Scan-✓-F7931E?style=flat-square" alt="Nuclei"/>
-<img src="https://img.shields.io/badge/XSS_Hunter-✓-9b59b6?style=flat-square" alt="XSS"/>
-<img src="https://img.shields.io/badge/IoT_Security-✓-e74c3c?style=flat-square" alt="IoT"/>
+<img src="https://img.shields.io/badge/CLI_Power-✓-9b59b6?style=flat-square" alt="CLI"/>
 </p>
 
 <br/>
@@ -28,15 +27,15 @@
 <tr>
 <td>
 
-```
+```text
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                                                                              ║
-║   🎯  BOUNTY BUDDY: Hunt bugs like a pro                                    ║
+║   🎯  BOUNTY BUDDY: The Ultimate Hacker's Companion                         ║
 ║                                                                              ║
-║       🌐  Web App Testing - Subdomain, API fuzzing, XSS detection           ║
-║       📡  IoT Security - MQTT, ONVIF, firmware analysis                      ║
-║       🔒  Nuclei Integration - CVE detection, vulnerability scanning         ║
-║       📊  Professional Reports - HTML, JSON, Markdown output                 ║
+║       🛠️  Unified CLI - Powerful Python-based command center                ║
+║       🔎  Shodan Integration - Deep infrastructure intelligence             ║
+║       🌐  Smart Recon - Passive & active enumeration modes                  ║
+║       📚  Knowledge Base - Built-in expert research & dorks                 ║
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
@@ -48,106 +47,11 @@
 <br/>
 
 <!-- Quick Links -->
-[**🚀 Quick Start**](#-quick-start) · [**🛠 Tools**](#-tools-included) · [**📚 Docs**](#-documentation) · [**⚠️ Legal**](#-legal-disclaimer)
+[**🚀 Quick Start**](#-quick-start) · [**✨ Features**](#-features) · [**📚 Knowledge Base**](#-knowledge-base) · [**⚠️ Legal**](#-legal-disclaimer)
 
 <br/>
 
 </div>
-
----
-
-<br/>
-
-## 🎯 The Problem vs Solution
-
-<table>
-<tr>
-<td width="50%">
-
-### ❌ The Problem
-```
-Manual reconnaissance:
-├── Run subfinder
-├── Run amass
-├── Deduplicate results
-├── Probe live hosts
-├── Run vulnerability scans
-├── Generate report
-└── Hours of context switching
-```
-
-</td>
-<td width="50%">
-
-### ✅ The Solution
-```bash
-$ bountybuddy target.com
-
-✓ Subdomains: 847 found
-✓ Live hosts: 234 active
-✓ Vulnerabilities: 12 found
-  - 2 Critical (SQLi, RCE)
-  - 4 High (XSS, SSRF)
-  - 6 Medium
-✓ Report: bounty-report.html
-
-🎯 Happy hunting!
-```
-
-</td>
-</tr>
-</table>
-
-<br/>
-
----
-
-<br/>
-
-## 🛠 Tools Included
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    WEB APPLICATION TOOLS                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  🔍  SUBDOMAIN-ENUM                                             │
-│      Multi-source enumeration (subfinder, amass, assetfinder)  │
-│                                                                 │
-│  🔧  APIFUZZ                                                    │
-│      API endpoint discovery and fuzzing with FFuF               │
-│                                                                 │
-│  🎯  NUCLEISCAN                                                 │
-│      Template-based vulnerability detection                     │
-│                                                                 │
-│  🕷️  WEBCRAWL                                                   │
-│      JavaScript parsing, URL extraction, Wayback Machine        │
-│                                                                 │
-│  💉  XSSHUNTER                                                  │
-│      Context-aware XSS detection with WAF bypass               │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────┐
-│                    IoT SECURITY TOOLS                           │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  📡  WSDISCOVERY                                                │
-│      ONVIF camera and IoT device enumeration                    │
-│                                                                 │
-│  📹  ONVIFSCAN                                                  │
-│      Authentication bypass and credential testing               │
-│                                                                 │
-│  📨  MQTTSCAN                                                   │
-│      MQTT broker security and anonymous access testing          │
-│                                                                 │
-│  🔬  FFIND                                                      │
-│      Firmware extraction and binary analysis                    │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-<br/>
 
 ---
 
@@ -158,35 +62,36 @@ $ bountybuddy target.com
 ### Installation
 
 ```bash
-# Clone and install
+# Clone the repository
 git clone https://github.com/consigcody94/bounty-buddy.git
 cd bounty-buddy
-pip install -e .
 
-# Verify
-bountybuddy --version
+# Install in editable mode
+pip install -e .
 ```
 
-### Bug Bounty Workflow
+### Setup
+
+Configure your environment (add your Shodan API key):
 
 ```bash
-# 1. Subdomain Enumeration
-subdomain-enum target.com -o subdomains.txt
+bountybuddy setup
+```
 
-# 2. Probe Live Hosts
-httpx -l subdomains.txt -o live-hosts.txt
+### Usage
 
-# 3. Vulnerability Scanning
-nucleiscan -l live-hosts.txt -t cves/ -t vulnerabilities/
+**1. Basic Recon Scan**
 
-# 4. API Fuzzing
-apifuzz https://api.target.com -w api-wordlist.txt
+```bash
+# Run a passive reconnaissance scan and Shodan lookup
+bountybuddy scan target.com --shodan
+```
 
-# 5. XSS Testing
-xsshunter https://target.com/search?q=test
+**2. Access Research & Dorks**
 
-# 6. Generate Report
-bountybuddy-report generate -i vulns.json -o report.html
+```bash
+# View the built-in bug bounty knowledge base
+bountybuddy research
 ```
 
 <br/>
@@ -195,31 +100,23 @@ bountybuddy-report generate -i vulns.json -o report.html
 
 <br/>
 
-## 📊 Architecture
+## ✨ Features
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
-│                    BOUNTY BUDDY ARCHITECTURE                    │
-├─────────────────────────────────────────────────────────────────┤
+│                    CORE CAPABILITIES                            │
 │                                                                 │
-│  bountybuddy/                                                   │
-│  ├── bin/                    # CLI executables                  │
-│  │   ├── subdomain-enum                                        │
-│  │   ├── apifuzz                                               │
-│  │   ├── nucleiscan                                            │
-│  │   ├── xsshunter                                             │
-│  │   └── mqttscan                                              │
-│  │                                                              │
-│  ├── tools/iothackbot/       # Core package                    │
-│  │   ├── core/               # Scanning engines                │
-│  │   │   ├── subdomain_core.py                                 │
-│  │   │   ├── async_scanner.py                                  │
-│  │   │   └── report_generator.py                               │
-│  │   └── *.py                # CLI interfaces                  │
-│  │                                                              │
-│  ├── tests/                  # Test suite                      │
-│  ├── wordlists/              # Fuzzing dictionaries            │
-│  └── .github/workflows/      # CI/CD pipelines                 │
+│  🖥️  CONTROLLER CLI                                             │
+│      Modern, colored TUI with progress bars and rich output.    │
+│                                                                 │
+│  🔎  SHODAN SCANNER                                             │
+│      Auto-query host info, open ports, and vulnerabilities.    │
+│                                                                 │
+│  🕵️  PASSIVE RECON                                              │
+│      Subdomain enumeration via Subfinder and more.             │
+│                                                                 │
+│  🧠  RESEARCH HUB                                               │
+│      Curated list of tools, methodologies, and dorks.          │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -230,18 +127,14 @@ bountybuddy-report generate -i vulns.json -o report.html
 
 <br/>
 
-## 📚 Documentation
+## 📚 Knowledge Base
 
-<div align="center">
+Bounty Buddy comes with a built-in library of bug bounty wisdom.
+Run `bountybuddy research` to access:
 
-| Document | Description |
-|:---------|:------------|
-| **[QUICKSTART.md](QUICKSTART.md)** | Get started in 5 minutes |
-| **[BUG_BOUNTY_GUIDE.md](docs/BUG_BOUNTY_GUIDE.md)** | Complete hunting guide |
-| **[TOOL_DEVELOPMENT_GUIDE.md](TOOL_DEVELOPMENT_GUIDE.md)** | Create custom tools |
-| **[CONTRIBUTING.md](CONTRIBUTING.md)** | Contribution guidelines |
-
-</div>
+* **Top Free Tools**: The essential kit for modern hunters.
+* **Vulnerability Priorities**: What pays the most and where to look.
+* **Shodan Dorks**: Specialized filters for finding exposed assets.
 
 <br/>
 
@@ -251,7 +144,7 @@ bountybuddy-report generate -i vulns.json -o report.html
 
 ## ⚠️ Legal Disclaimer
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │                    IMPORTANT NOTICE                             │
 ├─────────────────────────────────────────────────────────────────┤
@@ -261,10 +154,8 @@ bountybuddy-report generate -i vulns.json -o report.html
 │  ✅  Test systems you own or have written permission           │
 │  ✅  Respect scope limitations and rules of engagement         │
 │  ✅  Follow responsible disclosure practices                    │
-│  ✅  Document all testing activities                            │
 │                                                                 │
 │  ❌  Never use for unauthorized access                          │
-│  ❌  Never use for malicious purposes                           │
 │                                                                 │
 │  Users are solely responsible for proper authorization.         │
 │                                                                 │
@@ -276,30 +167,6 @@ bountybuddy-report generate -i vulns.json -o report.html
 ---
 
 <br/>
-
-## 🙏 Acknowledgments
-
-**Built upon [IoTHackBot](https://github.com/BrownFineSecurity/iothackbot)** by BrownFine Security
-
-Special thanks to ProjectDiscovery (Nuclei, httpx, subfinder), OWASP community, and all open-source security tool developers.
-
-<br/>
-
----
-
-<br/>
-
-## 📄 License
-
-<div align="center">
-
-**MIT License** © Bounty Buddy
-
-</div>
-
-<br/>
-
----
 
 <div align="center">
 

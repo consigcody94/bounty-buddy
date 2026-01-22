@@ -10,6 +10,7 @@
 ## Research Methodology
 
 This document compiles findings from:
+
 1. ✅ Academic papers on vulnerability discovery
 2. ✅ DEFCON presentations (Bug Bounty Village 2024)
 3. ✅ HackerOne/Bugcrowd top vulnerability reports
@@ -24,16 +25,19 @@ This document compiles findings from:
 ### Key Findings
 
 **Productivity Paradox**:
+
 - Top 20% of researchers find 80% of critical vulnerabilities
 - High-impact programs work with 56 skilled researchers vs 97 for low-impact programs
 - **Lesson**: Quality over quantity - focus on proven techniques
 
 **Vulnerability Distribution**:
+
 - **Most Reported**: XSS (but often low value)
 - **Most Valuable**: SSRF, IDOR, Privilege Escalation (harder to find)
 - **Context Matters**: Admin panels > User features for same vulnerability type
 
 **Success Factors**:
+
 - Automated tools + deep domain knowledge
 - Knowing WHERE to look, not just HOW to test
 - High signal-to-noise ratio (avoid junk findings)
@@ -43,6 +47,7 @@ This document compiles findings from:
 ## Source 1: DEFCON 32 Bug Bounty Village (2024)
 
 ### Event Details
+
 - **Location**: Las Vegas Convention Centre, August 8-11, 2024
 - **Format**: 20+ workshops, panels, and talks
 - **Participants**: HackerOne, Intigriti, SynAck representatives
@@ -50,47 +55,57 @@ This document compiles findings from:
 ### Key Presentations
 
 #### "Hunters & Gatherers" - Jeff Guerra
+
 **Topic**: Deep dive into bug bounty world
 
 **Key Takeaways**:
+
 - Bug bounty trends and best practices
 - Future of crowdsourced security
 - Community collaboration patterns
 
 #### "WAF Bypass Techniques"
+
 **Workshop**: Lost in Translation – WAF Bypasses by Abusing Data Manipulation Processes
 
 **Techniques**:
+
 - Data encoding manipulation
 - Character set confusion
 - Protocol-level bypasses
 
 #### "Prototype Pollution in Depth"
+
 **Instructor**: BitK
 
 **Coverage**:
+
 - Beginner to 0-day hunter progression
 - Real-world exploitation chains
 - Modern JavaScript vulnerability patterns
 
 ### AI-Assisted Bug Hunting
+
 - **Finding**: AI is revolutionizing bug hunting using LLMs to decipher code and discover vulnerabilities
 - **Impact**: Creating AI agents to augment bug bounty and pentesting workflows
 
 **Sources**:
+
 - [YesWeHack heads to DEF CON 32](https://www.yeswehack.com/page/yeswehack-def-con-32)
 - [Bug Bounty Village - DEF CON Forums](https://forum.defcon.org/node/248953)
-- [Hunters & Gatherers PDF](https://media.defcon.org/DEF CON 32/DEF CON 32 villages/)
+- [Hunters & Gatherers PDF](<https://media.defcon.org/DEF> CON 32/DEF CON 32 villages/)
 
 ---
 
 ## Source 2: Academic Research on Bug Bounties
 
 ### Paper 1: "Productivity and Patterns of Activity in Bug Bounty Programs"
+
 **Authors**: Analysis of HackerOne and Google Vulnerability Research
 **Published**: 2019
 
 **Key Findings**:
+
 - **Productivity Gap**: Large gap exists, likely related to knowledge gap and automated tool use
 - **Activity Patterns**: Three metrics introduced to study researcher performance
 - **Tool Usage**: Significant correlation between automation and success
@@ -98,19 +113,23 @@ This document compiles findings from:
 **Quote**: *"Hackers and testers follow similar processes, but get different results due largely to differing experiences and therefore different underlying knowledge of security concepts."*
 
 ### Paper 2: "Bug Bounty Hunting: Case Study of Successful Vulnerability Discovery"
+
 **Type**: Semi-structured interview study (n=25)
 **Focus**: How testers and hackers find vulnerabilities and develop skills
 
 **Findings**:
+
 1. **Skill Development**: Both groups follow similar learning paths but diverge in application
 2. **Challenges**: Communication with programs, scope clarity, duplicate findings
 3. **Success Factors**: Deep technical knowledge, persistence, creative thinking
 
 ### Paper 3: "Benefits of Vulnerability Discovery - Chromium and Firefox"
+
 **Published**: arXiv 2023
 **Metric**: Probability of rediscovery as novel difficulty measure
 
 **Key Stats**:
+
 - **20% of vulnerabilities** patched within 5 days of first report
 - **Most vulnerabilities** patched quickly after initial discovery
 - **Difficulty Metric**: Rediscovery probability indicates how hard a vuln is to find
@@ -118,6 +137,7 @@ This document compiles findings from:
 **Quote**: *"Vulnerability discovery and patching provide clear benefits by making it difficult for threat actors to find vulnerabilities."*
 
 **Sources**:
+
 - [ResearchGate: Bug Bounty Hunting Case Study](https://www.researchgate.net/publication/371628937)
 - [ResearchGate: Productivity and Patterns](https://www.researchgate.net/publication/335092518)
 - [arXiv: Benefits of Vulnerability Discovery](https://arxiv.org/abs/2301.12092)
@@ -165,12 +185,14 @@ This document compiles findings from:
 **Research Finding**: High-impact programs maintain better signal-to-noise ratio
 
 **Characteristics of High-Impact Programs**:
+
 - Work with **56 researchers** (avg) vs **97** for low-impact programs
 - **>30% of submissions** rated high or critical severity
 - **Managed triage service** validates and prioritizes findings
 - **Precise researcher activation** based on skills and track record
 
 **Noise Reduction**:
+
 - In-house security analysts validate reports
 - Maintain ongoing hacker communication
 - Zero out noise while providing actionable insights
@@ -178,6 +200,7 @@ This document compiles findings from:
 **Quote**: *"Pentests tend to uncover more systemic or architectural vulnerabilities while security researchers working on bug bounty programs focus more on real-world attack vectors, user-level issues, and business logic flaws."*
 
 **Sources**:
+
 - [HackerOne Top Ten Vulnerabilities](https://www.hackerone.com/lp/top-ten-vulnerabilities)
 - [HackerOne Blog: Most Impactful Vulnerability Types](https://www.hackerone.com/blog/hackerone-top-10-most-impactful-and-rewarded-vulnerability-types)
 - [Bugcrowd Managed Bug Bounty](https://www.bugcrowd.com/products/bug-bounty/)
@@ -193,11 +216,13 @@ This document compiles findings from:
 ### Methodology Structure
 
 #### Before You Get Hacking
+
 - Learning resources
 - Content creators and influencers
 - Community engagement
 
 #### Reconnaissance
+
 - Subdomain enumeration
 - ASN/IP discovery
 - Port scanning
@@ -207,12 +232,14 @@ This document compiles findings from:
 #### Application Analysis
 
 **1. Mapping**
+
 - Application structure
 - Entry points
 - Data flow
 - Technology stack
 
 **2. Authorization and Sessions**
+
 - Authentication mechanisms
 - Session management
 - Token analysis
@@ -226,6 +253,7 @@ This document compiles findings from:
 **80/20 Rule**: Focus on high-value XSS contexts
 
 **Polyglot Payloads**:
+
 ```
 # Multi-context filter bypass #1 (Rsnake)
 ';alert(String.fromCharCode(88,83,83))//
@@ -238,6 +266,7 @@ This document compiles findings from:
 ```
 
 **High-Value XSS Locations**:
+
 - Customizable themes & profiles via CSS
 - Event or meeting names
 - URI-based injection
@@ -249,6 +278,7 @@ This document compiles findings from:
 - Fake params: `?realparam=1&foo=bar'+alert(/XSS/)+'`
 
 **SWF Parameter XSS**:
+
 - Common params: `onload`, `allowedDomain`, `movieplayer`, `xmlPath`
 - Injection strings for Flash callbacks
 
@@ -257,12 +287,14 @@ This document compiles findings from:
 **Core Idea**: "Does the page look like it might need to call on stored data?"
 
 **Key Observations**:
+
 - **Blind is predominant** - Error-based is highly unlikely
 - **SQLMap is king** - Use `-l` to parse Burp log files
 - **Tamper scripts** for WAF bypass
 - **Lots of injection in web services** - APIs often vulnerable
 
 **Polyglot Payloads**:
+
 ```
 # Mathias Karlsson's polyglot
 SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
@@ -272,6 +304,7 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 ```
 
 **Best Resources** (from TBHM):
+
 - PentestMonkey cheat sheets (MySQL, MSSQL, Oracle, PostgreSQL)
 - Reiners MySQL injection filter evasion
 - EvilSQL MSSQL cheatsheet
@@ -282,11 +315,13 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 **Core Concept**: "Often logic, priv, auth bugs are blurred."
 
 **Testing User Privileges**:
+
 - Admin has power
 - Peon has none
 - **Test**: Peon can use function only meant for admin
 
 **Common Functions to Test**:
+
 - Add user function
 - Delete user function
 - Start project/campaign function
@@ -296,6 +331,7 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 - Any view with PII
 
 **IDOR Testing**:
+
 - Find ANY and ALL UIDs
 - Increment/decrement
 - Negative values
@@ -303,6 +339,7 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 - Substitute UIDs, user hashes, emails
 
 **Business Logic Flaws** (Manual Testing):
+
 - Substituting hashed parameters
 - Step manipulation
 - Use negatives in quantities
@@ -313,6 +350,7 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 **Recommended Tool**: [Autorize Burp Plugin](https://github.com/Quitten/Autorize)
 
 **Sources**:
+
 - [GitHub: jhaddix/tbhm](https://github.com/jhaddix/tbhm)
 - [The Bug Hunter's Methodology v4.0](https://www.classcentral.com/course/youtube-the-bug-hunter-s-methodology-v4-0-recon-edition-by-atjhaddix-nahamcon2020-179250)
 - [Arcanum Security Training](https://www.arcanum-sec.com/training/the-bug-hunters-methodology)
@@ -324,6 +362,7 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 ### Recent High-Severity Findings
 
 #### CVE-2025-62207: Azure Monitor SSRF
+
 **Type**: Server-Side Request Forgery
 **Severity**: 8.6 (High)
 **Impact**: Privilege escalation in Microsoft Azure Monitor
@@ -332,14 +371,17 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 **Pattern**: Cloud metadata SSRF continues to be high-value target
 
 #### IDOR Patterns in CVEs
+
 **Severity Range**: 4.0-8.9 (Medium to High)
 **Common Characteristics**:
+
 - Horizontal privilege escalation (most common)
 - Vertical privilege escalation (higher severity)
 - Inadequate access controls
 - Direct object reference without authorization
 
 **Search Terms** (for CVE database):
+
 - "horizontal privilege escalation"
 - "inadequate access controls"
 - "IDOR"
@@ -348,11 +390,13 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 ### Privilege Escalation Trends
 
 **CISA Known Exploited Vulnerabilities** (Recent):
+
 - Microsoft Windows SMB Client: Improper access control → privilege escalation
 - Broadcom VMware Aria Operations: Local privilege escalation to root
 - Multiple cloud services: Metadata access leading to privilege escalation
 
 **Sources**:
+
 - [PortSwigger: IDOR Web Security Academy](https://portswigger.net/web-security/access-control/idor)
 - [ZeroPath: Azure Monitor CVE-2025-62207](https://zeropath.com/blog/azure-monitor-cve-2025-62207-ssrf-privilege-escalation-summary)
 - [CISA Known Exploited Vulnerabilities](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
@@ -364,12 +408,14 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 ### How This Research is Used
 
 **1. Vulnerability Prioritization**
+
 ```python
 # Based on research, SSRF gets priority 10/10
 # XSS (reflected) gets priority 5/10
 ```
 
 **2. Context-Aware Testing**
+
 ```python
 # Admin panel detected → Focus on privilege escalation
 # API endpoint → Focus on IDOR and SSRF
@@ -377,6 +423,7 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 ```
 
 **3. Noise Filtering**
+
 ```python
 # Filter out self-XSS (no other user impact)
 # Deprioritize common info disclosure
@@ -384,6 +431,7 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 ```
 
 **4. Technique Selection**
+
 ```python
 # Use Jason Haddix's polyglot payloads
 # Apply HackerOne's high-impact focus
@@ -391,6 +439,7 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 ```
 
 **5. Success Metrics**
+
 ```python
 # Aim for 30%+ high/critical findings (high-impact program metric)
 # Prioritize rare, high-value vulnerabilities
@@ -416,12 +465,14 @@ SLEEP(1) /*' or SLEEP(1) or '" or SLEEP(1) or "*/
 ### Context Multipliers
 
 Add +2 priority if found in:
+
 - ✅ Admin panels
 - ✅ Authentication flows
 - ✅ Payment processing
 - ✅ API endpoints with PII
 
 Subtract -2 priority if:
+
 - ❌ Self-XSS only
 - ❌ Public information disclosure
 - ❌ UI-only issues
@@ -432,25 +483,69 @@ Subtract -2 priority if:
 ## References
 
 ### Academic Papers
+
 1. [Productivity and Patterns of Activity in Bug Bounty Programs](https://www.researchgate.net/publication/335092518)
 2. [Bug Bounty Hunting: Case Study](https://www.researchgate.net/publication/371628937)
 3. [Benefits of Vulnerability Discovery - Chromium and Firefox](https://arxiv.org/abs/2301.12092)
 
 ### Industry Sources
+
 4. [HackerOne Top Ten Vulnerabilities](https://www.hackerone.com/lp/top-ten-vulnerabilities)
-5. [Bugcrowd Managed Bug Bounty](https://www.bugcrowd.com/products/bug-bounty/)
-6. [DEFCON 32 Bug Bounty Village](https://www.yeswehack.com/page/yeswehack-def-con-32)
+2. [Bugcrowd Managed Bug Bounty](https://www.bugcrowd.com/products/bug-bounty/)
+3. [DEFCON 32 Bug Bounty Village](https://www.yeswehack.com/page/yeswehack-def-con-32)
 
 ### Methodologies
+
 7. [Jason Haddix's Bug Hunter Methodology](https://github.com/jhaddix/tbhm)
-8. [Bug Bounty Methodology 2025](https://github.com/amrelsagaei/Bug-Bounty-Hunting-Methodology-2025)
+2. [Bug Bounty Methodology 2025](https://github.com/amrelsagaei/Bug-Bounty-Hunting-Methodology-2025)
 
 ### Vulnerability Databases
+
 9. [CISA Known Exploited Vulnerabilities](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
-10. [PortSwigger Web Security Academy](https://portswigger.net/web-security)
+2. [PortSwigger Web Security Academy](https://portswigger.net/web-security)
 
 ---
 
-**Last Updated**: 2025-11-23
-**Integration Status**: ✅ Integrated into `tools/iothackbot/intelligence/bug_bounty_kb.py`
-**Usage**: All tools now use this intelligence for prioritization and noise filtering
+## Source 6: Essential Free Tools for Bug Hunters (2025 Edition)
+
+### 1. Reconnaissance & Discovery
+
+* **Subfinder**: Fast passive subdomain enumeration.
+- **Amass**: In-depth DNS enumeration and mapping.
+- **httpx**: Fast and multi-purpose HTTP toolkit to probe discovered domains.
+- **Waybackurls / GAU**: Fetch known URLs from the Wayback Machine and other archives.
+
+### 2. Scanning & Vulnerability Detection
+
+* **Nuclei**: Template-based vulnerability scanner (Top Tier).
+- **ZAP (OWASP Zed Attack Proxy)**: Free, open-source web application security scanner.
+- **Shodan (Free Tier)**: Search engine for Internet-connected devices.
+
+### 3. Fuzzing & Exploitation
+
+* **FFuF**: Fast web fuzzer written in Go.
+- **SQLMap**: Automatic SQL injection and database takeover tool.
+
+---
+
+## Source 7: Shodan Intelligence (Dorks & Filters)
+
+### Top Filters for Bug Bounty
+
+* `org:"Target Name"` - Search by organization.
+- `ssl:"target.com"` - Search by SSL certificate.
+- `http.title:"Dashboard"` - Findexposed dashboards.
+- `product:"Jenkins"` - Find Jenkins instances.
+- `port:"8080"` - Common alternative HTTP port.
+
+### Danger Dorks (Use with Caution & Permission)
+
+* `"default password" org:"Target"`
+- `http.title:"Index of /" org:"Target"`
+- `proftpd port:21 org:"Target"`
+
+---
+
+**Last Updated**: 2026-01-22
+**Integration Status**: ✅ Integrated into `bountybuddy` CLI
+**Usage**: Accessible via `bountybuddy research` command
